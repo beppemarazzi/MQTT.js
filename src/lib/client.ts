@@ -282,6 +282,10 @@ export interface IClientOptions extends ISecureClientOptions {
 	 * or pass a custom timer object
 	 */
 	timerVariant?: TimerVariant | Timer
+	/**
+	 * false, set to true to force the use of native WebSocket if you're having issues with the detection
+	 */
+	forceNativeWebSocket?: boolean
 }
 
 export interface IClientPublishOptions {
@@ -319,7 +323,7 @@ export interface IClientReconnectOptions {
 }
 export interface IClientSubscribeProperties {
 	/*
-	 *  MQTT 5.0 properies object of subscribe
+	 *  MQTT 5.0 properties object of subscribe
 	 * */
 	properties?: ISubscribePacket['properties']
 }
@@ -366,12 +370,20 @@ export type ISubscriptionMap = {
 	resubscribe?: boolean
 }
 
+export interface IClientUnsubscribeProperties {
+	/*
+	 *  MQTT 5.0 properties object for unsubscribe
+	 * */
+	properties?: IUnsubscribePacket['properties']
+}
+
 export { IConnackPacket, IDisconnectPacket, IPublishPacket, Packet }
 export type OnConnectCallback = (packet: IConnackPacket) => void
 export type OnDisconnectCallback = (packet: IDisconnectPacket) => void
 export type ClientSubscribeCallback = (
 	err: Error | null,
 	granted?: ISubscriptionGrant[],
+	packet?: ISubackPacket,
 ) => void
 export type OnMessageCallback = (
 	topic: string,
@@ -381,7 +393,10 @@ export type OnMessageCallback = (
 export type OnPacketCallback = (packet: Packet) => void
 export type OnCloseCallback = () => void
 export type OnErrorCallback = (error: Error | ErrorWithReasonCode) => void
-export type PacketCallback = (error?: Error, packet?: Packet) => any
+export type PacketCallback = (
+	error?: Error | ErrorWithReasonCode,
+	packet?: Packet,
+) => any
 export type CloseCallback = (error?: Error) => void
 
 export interface MqttClientEventCallbacks {
@@ -1234,7 +1249,7 @@ export default class MqttClient extends TypedEventEmitter<MqttClientEventCallbac
 						}
 					}
 
-					callback(err, subs)
+					callback(err, subs, packet2)
 				},
 			}
 			this.log('subscribe :: call _sendPacket')
@@ -1293,7 +1308,7 @@ export default class MqttClient extends TypedEventEmitter<MqttClientEventCallbac
 	public unsubscribe(topic: string | string[]): MqttClient
 	public unsubscribe(
 		topic: string | string[],
-		opts?: IClientSubscribeOptions,
+		opts?: IClientUnsubscribeProperties,
 	): MqttClient
 	public unsubscribe(
 		topic: string | string[],
@@ -1301,12 +1316,12 @@ export default class MqttClient extends TypedEventEmitter<MqttClientEventCallbac
 	): MqttClient
 	public unsubscribe(
 		topic: string | string[],
-		opts?: IClientSubscribeOptions,
+		opts?: IClientUnsubscribeProperties,
 		callback?: PacketCallback,
 	): MqttClient
 	public unsubscribe(
 		topic: string | string[],
-		opts?: IClientSubscribeOptions | PacketCallback,
+		opts?: IClientUnsubscribeProperties | PacketCallback,
 		callback?: PacketCallback,
 	): MqttClient {
 		if (typeof topic === 'string') {
@@ -1388,11 +1403,11 @@ export default class MqttClient extends TypedEventEmitter<MqttClientEventCallbac
 	): Promise<Packet | undefined>
 	public unsubscribeAsync(
 		topic: string | string[],
-		opts?: IClientSubscribeOptions,
+		opts?: IClientUnsubscribeProperties,
 	): Promise<Packet | undefined>
 	public unsubscribeAsync(
 		topic: string | string[],
-		opts?: IClientSubscribeOptions,
+		opts?: IClientUnsubscribeProperties,
 	): Promise<Packet | undefined> {
 		return new Promise((resolve, reject) => {
 			this.unsubscribe(topic, opts, (err, packet) => {

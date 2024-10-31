@@ -1,5 +1,48 @@
 
 
+## [5.10.1](https://github.com/mqttjs/MQTT.js/compare/v5.10.0...v5.10.1) (2024-08-28)
+
+
+### Bug Fixes
+
+* **browser:** handle `Blob` payloads ([#1930](https://github.com/mqttjs/MQTT.js/issues/1930)) ([86b7959](https://github.com/mqttjs/MQTT.js/commit/86b795983d86847e1da334fd0d30cbd80f92b540))
+
+# [5.10.0](https://github.com/mqttjs/MQTT.js/compare/v5.9.1...v5.10.0) (2024-08-14)
+
+
+### Bug Fixes
+
+* **test:** close all open connections in abstract_client test ([#1917](https://github.com/mqttjs/MQTT.js/issues/1917)) ([661c30a](https://github.com/mqttjs/MQTT.js/commit/661c30aecb8d7531fc052a7770519267067840fb))
+* **types:** unsubscribe options type ([#1921](https://github.com/mqttjs/MQTT.js/issues/1921)) ([18a357c](https://github.com/mqttjs/MQTT.js/commit/18a357ce98c2e7ae053afefaf7c56a0d3a8e62b7))
+
+
+### Features
+
+* add `suback` packet to subscribe callback ([#1923](https://github.com/mqttjs/MQTT.js/issues/1923)) ([93f4482](https://github.com/mqttjs/MQTT.js/commit/93f4482570b6e96d81a5466ea94c3fd7308ff31c))
+* add unsubscribe ack packet to the unsubscribe callback ([#1922](https://github.com/mqttjs/MQTT.js/issues/1922)) ([8bcf304](https://github.com/mqttjs/MQTT.js/commit/8bcf3042a9133acf8d266d73bc67153a69660e05))
+
+## [5.9.1](https://github.com/mqttjs/MQTT.js/compare/v5.9.0...v5.9.1) (2024-08-01)
+
+
+### Bug Fixes
+
+* **browser:** ensure proxy is defined ([ffc9805](https://github.com/mqttjs/MQTT.js/commit/ffc9805a51adf88bded6a1af1c0f66004e9e0f08))
+* **browser:** prevent error `stream.push() after EOF` ([#1915](https://github.com/mqttjs/MQTT.js/issues/1915)) ([b5cc835](https://github.com/mqttjs/MQTT.js/commit/b5cc835fed9bd624c20d5f4f42b15c3cfa4b3fbe)), closes [#1914](https://github.com/mqttjs/MQTT.js/issues/1914)
+* **test:** close open connections ([#1911](https://github.com/mqttjs/MQTT.js/issues/1911)) ([053a7be](https://github.com/mqttjs/MQTT.js/commit/053a7be91f93a0a27c63ca5ed488d9206fdec960))
+
+# [5.9.0](https://github.com/mqttjs/MQTT.js/compare/v5.8.1...v5.9.0) (2024-07-26)
+
+
+### Bug Fixes
+
+* tets hang up ([#1906](https://github.com/mqttjs/MQTT.js/issues/1906)) ([c462530](https://github.com/mqttjs/MQTT.js/commit/c462530d2ec0b61a20cc43f188254bf2b403787a))
+* **types:** add connectAsync overload signature with allowRetries ([#1909](https://github.com/mqttjs/MQTT.js/issues/1909)) ([6b278dc](https://github.com/mqttjs/MQTT.js/commit/6b278dca5a5b82b07835344f3c129ddd5b73e6e8))
+
+
+### Features
+
+* add `forceNativeWebSocket` client option ([#1910](https://github.com/mqttjs/MQTT.js/issues/1910)) ([103d172](https://github.com/mqttjs/MQTT.js/commit/103d1721d68952e536a3704a05a569c95f0a1987)), closes [#1796](https://github.com/mqttjs/MQTT.js/issues/1796) [#1895](https://github.com/mqttjs/MQTT.js/issues/1895)
+
 ## [5.8.1](https://github.com/mqttjs/MQTT.js/compare/v5.8.0...v5.8.1) (2024-07-18)
 
 
